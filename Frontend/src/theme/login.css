@@ -1,0 +1,83 @@
+.overlap-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+  color: var(--ion-text-color-black);
+}
+.loginform {
+  margin-top: 100px;
+  width: 320px;
+}
+.reg-form {
+  margin: 0 auto;
+  width: 320px;
+}
+.contact {
+  margin-top: 100px;
+}
+
+.error-login {
+  color: rgb(255, 0, 0);
+}
+
+.login-account {
+  color: rgb(0, 0, 0);
+}
+
+.reg-form form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.reg-form p {
+  text-align: center;
+  color: var(--ion-text-color-black);
+}
+
+.first-circle {
+  width: 150px;
+  height: 150px;
+  background: #481E4F;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  filter: blur(170px);
+}
+
+.flex-circle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loginform h1,
+.loginform p {
+  text-align: center;
+}
+
+.input-field-2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.btn-otp{
+width: 100%;
+}
+
+.resend-otp{
+  margin-top: 10px;
+  text-align: center;
+}

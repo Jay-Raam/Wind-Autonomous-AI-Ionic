@@ -1,0 +1,7 @@
+{
+  "name": "Sili Green",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

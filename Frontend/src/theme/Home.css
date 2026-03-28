@@ -1,0 +1,9 @@
+.top-menu-logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Icon-logout{
+    margin-right: 20px;
+}
