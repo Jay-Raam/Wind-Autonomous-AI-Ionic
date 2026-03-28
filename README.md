@@ -6,25 +6,126 @@ A full-stack, production-ready platform for orchestrating autonomous AI agents. 
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Architecture](#architecture)
-3. [Tech Stack](#tech-stack)
-4. [Project Structure](#project-structure)
-5. [Features](#features)
-6. [Getting Started](#getting-started)
+1. [What Problem Are We Solving?](#what-problem-are-we-solving)
+2. [How Does Wind AI Work?](#how-does-wind-ai-work)
+3. [Screenshots](#screenshots)
+4. [Overview](#overview)
+5. [Architecture](#architecture)
+6. [Tech Stack](#tech-stack)
+7. [Project Structure](#project-structure)
+8. [Features](#features)
+9. [Getting Started](#getting-started)
    - [Prerequisites](#prerequisites)
    - [Backend Setup](#backend-setup)
    - [Frontend Setup](#frontend-setup)
-7. [Environment Variables](#environment-variables)
-   - [Backend](#backend-env)
-   - [Frontend](#frontend-env)
-8. [API Reference](#api-reference)
-   - [REST Endpoints](#rest-endpoints)
-   - [GraphQL](#graphql)
-   - [Socket.IO Events](#socketio-events)
-9. [Mobile Build](#mobile-build)
-10. [Security](#security)
-11. [Scripts Reference](#scripts-reference)
+10. [Environment Variables](#environment-variables)
+    - [Backend](#backend-env)
+    - [Frontend](#frontend-env)
+11. [API Reference](#api-reference)
+    - [REST Endpoints](#rest-endpoints)
+    - [GraphQL](#graphql)
+    - [Socket.IO Events](#socketio-events)
+12. [Mobile Build](#mobile-build)
+13. [Security](#security)
+14. [Scripts Reference](#scripts-reference)
+
+---
+
+## What Problem Are We Solving?
+
+Modern knowledge work is repetitive and slow: researching a topic, analysing findings, drafting a report — each step requires context-switching between tools and waiting on human turn-around.
+
+**Wind AI eliminates that cycle.**
+
+| Pain today                                               | How NextAI fixes it                                                          |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Tasks require many manual research steps                 | One natural-language prompt kicks off an entire agent pipeline               |
+| AI tools give a single response with no chain-of-thought | Planner → Research → Analysis → Writer agents each own a specific step       |
+| No visibility into what the AI is actually doing         | Every agent step and tool call streams live to your screen in real time      |
+| Results disappear after the session                      | Every task, agent log, and tool result is persisted and queryable            |
+| AI behaviour is a black box                              | Configurable model, temperature, tool approval, and autonomous mode per user |
+| Desktop-only AI interfaces                               | Full cross-platform support: web, Android, and iOS from one codebase         |
+
+---
+
+## How Does Wind AI Work?
+
+When you submit a task, the following happens automatically:
+
+### Step 1 — Task is created and queued
+
+```
+User writes a prompt  →  POST /api/tasks
+                              ↓
+                    Task saved as "pending"
+                              ↓
+                   Pushed into BullMQ queue
+                   (or executed inline if Redis
+                    is not available)
+```
+
+### Step 2 — Planner Agent breaks it down
+
+The PlannerAgent reads the user prompt and produces a structured execution plan — what to research, what to analyse, and what the final output format should be.
+
+### Step 3 — Research Agent gathers data
+
+The ResearchAgent uses the **WebSearchTool** to fetch real information relevant to the plan. Tool calls are persisted and visible in the Task Detail screen.
+
+### Step 4 — Analysis Agent processes findings
+
+The AnalysisAgent reads the raw research output, identifies patterns, draws conclusions, and builds a structured data payload for the writer.
+
+### Step 5 — Writer Agent produces the final result
+
+The WriterAgent synthesises the analysis into a polished, human-readable response — the `result` field stored on the task.
+
+### Step 6 — Live updates all the way through
+
+Every agent status change emits a Socket.IO event to the task's room. The frontend polls and listens so the UI updates without a page refresh.
+
+```
+BullMQ worker
+    │
+    ├─ PlannerAgent  ──────────────────► socket: agent_step
+    ├─ ResearchAgent + WebSearchTool  ──► socket: tool_executed
+    ├─ AnalysisAgent ─────────────────► socket: agent_step
+    └─ WriterAgent   ──► result saved ──► socket: task_completed
+```
+
+### LLM Provider fallback
+
+If the primary LLM provider fails or has no API key configured, the system automatically falls through:
+
+```
+Preferred provider → Gemini → OpenRouter → OpenAI → Local (Ollama)
+```
+
+This means the system keeps working even during provider outages or during local development without any paid API key.
+
+---
+
+### Login
+
+![Login screen](./docs/screenshots/login.png)
+
+### Dashboard — Task List
+
+![Dashboard](./docs/screenshots/dashboard.png)
+
+### Create Task
+
+![Create task](./docs/screenshots/create-task.png)
+
+### Task Detail — Live Agent Steps
+
+![Task detail](./docs/screenshots/task-detail.png)
+
+### Settings
+
+![Settings](./docs/screenshots/settings.png)
+
+> To add real screenshots: create a `docs/screenshots/` folder in the repo root, drop in your PNG files, and the links above will resolve automatically.
 
 ---
 
