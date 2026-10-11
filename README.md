@@ -1,5 +1,11 @@
 # NextAI — Wind-Powered AI Task Manager
 
+[![CI](https://github.com/Jay-Raam/Wind-Autonomous-AI-Ionic/actions/workflows/ci.yml/badge.svg)](https://github.com/Jay-Raam/Wind-Autonomous-AI-Ionic/actions/workflows/ci.yml)
+[![Ionic React](https://img.shields.io/badge/Ionic%20React-8.5-3880FF?logo=ionic)](https://ionicframework.com/)
+[![Capacitor](https://img.shields.io/badge/Capacitor-7.2-119EFF?logo=capacitor)](https://capacitorjs.com/)
+[![Zustand](https://img.shields.io/badge/State-Zustand-orange)](https://github.com/pmndrs/zustand)
+[![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js)](https://nodejs.org/)
+
 A full-stack, production-ready platform for orchestrating autonomous AI agents. Users create tasks through a cross-platform mobile/web app; the backend breaks each task into a multi-agent pipeline (Planner → Research → Analysis → Writer), streams live progress over Socket.IO, and persists everything in MongoDB.
 
 ---
