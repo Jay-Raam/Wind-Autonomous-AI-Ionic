@@ -111,30 +111,6 @@ This means the system keeps working even during provider outages or during local
 
 ---
 
-### Login
-
-![Login screen](./docs/screenshots/login.png)
-
-### Dashboard — Task List
-
-![Dashboard](./docs/screenshots/dashboard.png)
-
-### Create Task
-
-![Create task](./docs/screenshots/create-task.png)
-
-### Task Detail — Live Agent Steps
-
-![Task detail](./docs/screenshots/task-detail.png)
-
-### Settings
-
-![Settings](./docs/screenshots/settings.png)
-
-> To add real screenshots: create a `docs/screenshots/` folder in the repo root, drop in your PNG files, and the links above will resolve automatically.
-
----
-
 ## Overview
 
 NextAI lets you submit a natural-language task and watch a chain of AI agents execute it in real time. Each task goes through:
